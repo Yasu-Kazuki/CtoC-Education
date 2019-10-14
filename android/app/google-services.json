@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "288305553171",
+    "firebase_url": "https://ctoceducation-4c3fe.firebaseio.com",
+    "project_id": "ctoceducation-4c3fe",
+    "storage_bucket": "ctoceducation-4c3fe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:288305553171:android:40f0c361f45b6f6ab084e6",
+        "android_client_info": {
+          "package_name": "mic.com.jp.c2c_education"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "288305553171-jl9avglholgso962r5bhdm3s7hs3q9ne.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC74OjZM_BjGxxsBl5rKS7uH3VVDiAVyv0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "288305553171-jl9avglholgso962r5bhdm3s7hs3q9ne.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
