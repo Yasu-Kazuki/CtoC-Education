@@ -1,98 +1,72 @@
-import 'package:c2c_education/models/usr_entry.dart';
+import 'package:c2c_education/screens/tabs/register_class.dart';
+import 'package:c2c_education/screens/tabs/search_class.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_database/firebase_database.dart';
 
-import 'package:c2c_education/models/contents_entry.dart';
 
-// home screen
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => new _HomeState();
 }
 
-class _HomeState extends State<Home> {
-  final _contentsReference = FirebaseDatabase.instance.reference().child("contentsID");
-  final _userReference = FirebaseDatabase.instance.reference().child("userID");
+class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
-  // contents entries
-  List<ContentsEntry> contentsEntries = new List();
-
-  // user entries
-  List<UserEntry> userEntries = new List();
+  TabController controller;
 
   @override
-  initState() {
+  void initState() {
     super.initState();
-    _contentsReference.onChildAdded.listen(_onContentsEntryAdded);
-    _userReference.onChildAdded.listen(_onUserEntryAdded);
 
-    _contentsReference.once().then((DataSnapshot snapShot) {
-      contentsEntries.add(new ContentsEntry.fromSnapShot(snapShot));
-    });
-
-    _userReference.once().then((DataSnapshot snapShot) {
-      userEntries.add(new UserEntry.fromSnapShot(snapShot));
-    });
+    // Initialize the Tab Controller
+    controller = new TabController(length: 2, vsync: this);
   }
 
-
-  _onContentsEntryAdded(Event e) {
-    setState(() {
-      contentsEntries.add(new ContentsEntry.fromSnapShot(e.snapshot));
-    });
+  @override
+  void dispose() {
+    // Dispose of the Tab Controller
+    controller.dispose();
+    super.dispose();
   }
 
-  _onUserEntryAdded(Event e) {
-    setState(() {
-      userEntries.add(new UserEntry.fromSnapShot(e.snapshot));
-    });
+  TabBar getTabBar() {
+    return new TabBar(
+      tabs: <Tab>[
+        new Tab(
+
+          // set icon to the tab
+          icon: new Icon(Icons.create),
+            child: Text('授業検索')
+        ),
+        new Tab(
+          icon: new Icon(Icons.search),
+            child: Text('授業登録')
+        )
+      ],
+      // setup the controller
+      controller: controller,
+    );
   }
 
+  TabBarView getTabBarView(var tabs) {
+    return new TabBarView(
+      // Add tabs as widgets
+      children: tabs,
+      // set the controller
+      controller: controller,
+    );
+  }
 
-  // screen build
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          title: new Text("Contents")
-      ),
-      body: Container(
-          child: new Column(
-            children: <Widget>[
-              Expanded(
-                child:
-                ListView.builder(
-                  padding: const EdgeInsets.all(16.0),
-                  itemBuilder: (BuildContext context, int index) {
-                    return _buildRow(index);
-                  },
-                  itemCount: contentsEntries.length-1,
-                ),
-              )
-            ],
-          )
-      ),
-    );
-  }
-
-  // contents row
-  Widget _buildRow(int index) {
-    return Card(
-        child: ListTile(
-            title: Text(contentsEntries[index].title),
-            subtitle: Text("講師：" + getTeacherName(contentsEntries[index].teacherId))
-        )
-    );
-  }
-
-  // get teacher name
-  String getTeacherName(String id){
-    for(UserEntry user in userEntries) {
-      if(id == user.id){
-        return user.name;
-      }
-    }
-
-    return "unknown";
+    return new Scaffold(
+      // Appbar
+        appBar: new AppBar(
+          // Title
+            title: new Text("コンテンツ"),
+            // Set the background color of the App Bar
+            backgroundColor: Colors.blue,
+            // Set the bottom property of the Appbar to include a Tab Bar
+            bottom: getTabBar()),
+        // Set the TabBar view as the body of the Scaffold
+        body: getTabBarView(<Widget>[new SearchClass(), new RegisterClass()]));
   }
 }
