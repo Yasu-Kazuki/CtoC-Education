@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class RegisterClass extends StatelessWidget {
+class ApprovalClass extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Container(
@@ -9,11 +9,11 @@ class RegisterClass extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             new Icon(
-              Icons.search,
+              Icons.people_outline,
               size: 160.0,
               color: Colors.blue,
             ),
-            new Text("授業登録画面")
+            new Text("授業申請画面")
           ],
         ),
       ),

@@ -1,3 +1,5 @@
+import 'package:c2c_education/common/pop_menu_choice.dart';
+import 'package:c2c_education/screens/tabs/approval_class.dart';
 import 'package:c2c_education/screens/tabs/register_class.dart';
 import 'package:c2c_education/screens/tabs/search_class.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +11,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
-
   TabController controller;
 
   @override
@@ -17,7 +18,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     super.initState();
 
     // Initialize the Tab Controller
-    controller = new TabController(length: 2, vsync: this);
+    controller = new TabController(length: 3, vsync: this);
   }
 
   @override
@@ -31,14 +32,16 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     return new TabBar(
       tabs: <Tab>[
         new Tab(
-
-          // set icon to the tab
           icon: new Icon(Icons.create),
             child: Text('授業検索')
         ),
         new Tab(
           icon: new Icon(Icons.search),
             child: Text('授業登録')
+        ),
+        new Tab(
+            icon: new Icon(Icons.people_outline),
+            child: Text('授業申請')
         )
       ],
       // setup the controller
@@ -58,15 +61,27 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      // Appbar
         appBar: new AppBar(
-          // Title
             title: new Text("コンテンツ"),
-            // Set the background color of the App Bar
+            actions: <Widget>[
+              PopupMenuButton<PopMenuChoice>(
+                onSelected: _select,
+                itemBuilder: (BuildContext context) {
+                  return choices.map((PopMenuChoice choice) {
+                    return PopupMenuItem<PopMenuChoice>(
+                      value: choice,
+                      child: Text(choice.title),
+                    );
+                  }).toList();
+                },
+              ),
+            ],
             backgroundColor: Colors.blue,
-            // Set the bottom property of the Appbar to include a Tab Bar
             bottom: getTabBar()),
-        // Set the TabBar view as the body of the Scaffold
-        body: getTabBarView(<Widget>[new SearchClass(), new RegisterClass()]));
+        body: getTabBarView(<Widget>[new SearchClass(), new RegisterClass(), new ApprovalClass()]));
+  }
+
+  void _select(PopMenuChoice choice) {
+    // do nothing
   }
 }

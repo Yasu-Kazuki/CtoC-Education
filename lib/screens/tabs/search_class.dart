@@ -4,7 +4,6 @@ import 'package:firebase_database/firebase_database.dart';
 
 import 'package:c2c_education/models/contents_entry.dart';
 
-// home screen
 class SearchClass extends StatefulWidget {
   @override
   _SearchClassState createState() => new _SearchClassState();
@@ -14,10 +13,7 @@ class _SearchClassState extends State<SearchClass> {
   final _contentsReference = FirebaseDatabase.instance.reference().child("contentsID");
   final _userReference = FirebaseDatabase.instance.reference().child("userID");
 
-  // contents entries
   List<ContentsEntry> contentsEntries = new List();
-
-  // user entries
   List<UserEntry> userEntries = new List();
 
   @override
@@ -35,7 +31,6 @@ class _SearchClassState extends State<SearchClass> {
     });
   }
 
-
   _onContentsEntryAdded(Event e) {
     setState(() {
       contentsEntries.add(new ContentsEntry.fromSnapShot(e.snapshot));
@@ -48,8 +43,6 @@ class _SearchClassState extends State<SearchClass> {
     });
   }
 
-
-  // screen build
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,7 +65,6 @@ class _SearchClassState extends State<SearchClass> {
     );
   }
 
-  // contents rowå
   Widget _buildRow(int index) {
     return Card(
         child: ListTile(
@@ -82,7 +74,6 @@ class _SearchClassState extends State<SearchClass> {
     );
   }
 
-  // get teacher name
   String getTeacherName(String id){
     for(UserEntry user in userEntries) {
       if(id == user.id){
